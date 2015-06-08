@@ -137,12 +137,12 @@ int main(void)
 			vVelocity = -vVelocity;	
 		}
 
-		// bounce off bottom edge of window
+		// collision with bottom edge of window
 		else if (getY(ball) >= HEIGHT)
 		{
 			lives--;
-			double bx = (WIDTH/2) - BALLRADIUS*2;	
-			double by = (HEIGHT/2) - BALLRADIUS*2;
+			double bx = (WIDTH / 2) - BALLRADIUS*2;	
+			double by = (HEIGHT / 1.5) - BALLRADIUS*2;
 			setLocation(ball, bx, by);
 			if (lives) waitForClick();
 		}
@@ -174,6 +174,17 @@ int main(void)
 
 	/* GAME OVER */
 	removeGWindow(window, paddle);
+	removeGWindow(window, ball);
+
+	// display game over
+	GLabel gameover = newGLabel("GAME OVER");
+	setFont(gameover, "SansSerif-50");
+	setColor(gameover, "LIGHT_GRAY");
+	double gox = (getWidth(window) - getWidth(gameover)) / 2;
+    double goy = (getHeight(window) - getHeight(gameover));
+    setLocation(gameover, gox, goy);
+    add(window, gameover);
+
     // wait for click before exiting
     waitForClick();
     closeGWindow(window);
