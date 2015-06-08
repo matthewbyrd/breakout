@@ -79,8 +79,10 @@ int main(void)
     int points = 0;
 
 	/** ball movement */
-	double hVelocity = drand48() + 1.0;
-	double vVelocity = 1.0;	
+	double hVelocity = drand48() + 2.0;
+	double vVelocity = 2.0;	
+	// object ball collides with
+	GObject object;
 
     // keep playing until game over
     while (lives && bricks)
@@ -137,6 +139,25 @@ int main(void)
 			// TODO bounce for now but ultimately remove a life
 			vVelocity = -vVelocity;
 		}
+				
+		/* bounce off objects */ 
+		object = detectCollision(window, ball);
+		
+		// bounce off paddle
+		if (object == paddle)
+		{
+			vVelocity = -vVelocity;
+		}
+		/*
+		// bounce off bricks
+		else if (strcmp(getType(object), "GRect") == 0 && 
+				strcmp(getType(object), "GLabel") != 0)  // not label
+		{
+			vVelocity = -vVelocity;
+			hVelocity = -hVelocity;
+			// TODO: delete brick and update score
+		}
+			*/
 
         // linger before moving again
         pause(10);
@@ -184,11 +205,11 @@ void initBricks(GWindow window)
 GOval initBall(GWindow window)
 {
 	// find centre position
-	double x = (WIDTH/2) - BALLRADIUS;	
-	double y = (HEIGHT/2) - BALLRADIUS;
+	double x = (WIDTH/2) - BALLRADIUS*2;	
+	double y = (HEIGHT/2) - BALLRADIUS*2;
 
 	// set up ball
-    GOval ball = newGOval(x, y, BALLRADIUS, BALLRADIUS);
+    GOval ball = newGOval(x, y, BALLRADIUS*2, BALLRADIUS*2);
 	setColor(ball, "BLACK");
 	setFilled(ball, true);
 	add(window, ball);
