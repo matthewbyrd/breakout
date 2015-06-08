@@ -148,16 +148,16 @@ int main(void)
 		{
 			vVelocity = -vVelocity;
 		}
-		/*
+	
 		// bounce off bricks
-		else if (strcmp(getType(object), "GRect") == 0 && 
-				strcmp(getType(object), "GLabel") != 0)  // not label
+		else if (object != NULL && (strcmp(getType(object), "GRect") == 0) &&
+				(strcmp(getType(object), "GLabel") != 0))
 		{
 			vVelocity = -vVelocity;
-			hVelocity = -hVelocity;
-			// TODO: delete brick and update score
+			// delete brick
+			removeGWindow(window, object); 
+			// TODO: update score
 		}
-			*/
 
         // linger before moving again
         pause(10);
