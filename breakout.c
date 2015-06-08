@@ -140,8 +140,11 @@ int main(void)
 		// bounce off bottom edge of window
 		else if (getY(ball) >= HEIGHT)
 		{
-			// TODO bounce for now but ultimately remove a life
-			vVelocity = -vVelocity;
+			lives--;
+			double bx = (WIDTH/2) - BALLRADIUS*2;	
+			double by = (HEIGHT/2) - BALLRADIUS*2;
+			setLocation(ball, bx, by);
+			pauseUntilClick();
 		}
 				
 		/* bounce off objects */ 
