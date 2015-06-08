@@ -86,7 +86,7 @@ int main(void)
 	GObject object;
 
 	// game begins when user clicks
-	pauseUntilClick();
+	waitForClick();
 
     // keep playing until game over
     while (lives && bricks)
@@ -144,7 +144,7 @@ int main(void)
 			double bx = (WIDTH/2) - BALLRADIUS*2;	
 			double by = (HEIGHT/2) - BALLRADIUS*2;
 			setLocation(ball, bx, by);
-			pauseUntilClick();
+			if (lives) waitForClick();
 		}
 				
 		/* bounce off objects */ 
@@ -172,31 +172,12 @@ int main(void)
         pause(10);
     }
 
+	/* GAME OVER */
+	removeGWindow(window, paddle);
     // wait for click before exiting
     waitForClick();
-
-    // game over
     closeGWindow(window);
     return 0;
-}
-
-/**
- * Waits for the user to click before continuing
- */
-void pauseUntilClick(void)
-{
-	while (true)
-	{
-		GEvent event = getNextEvent(MOUSE_EVENT);
-		if (event != NULL)
-		{
-			if (getEventType(event) == MOUSE_CLICKED)
-			{
-				return;
-			}
-		}
-		pause(20);
-	}
 }
 
 /**
@@ -233,8 +214,8 @@ void initBricks(GWindow window)
 GOval initBall(GWindow window)
 {
 	// find centre position
-	double x = (WIDTH/2) - BALLRADIUS;	
-	double y = (HEIGHT/2) - BALLRADIUS;
+	double x = (WIDTH / 2) - BALLRADIUS;	
+	double y = (HEIGHT / 2) - BALLRADIUS;
 
 	// set up ball
     GOval ball = newGOval(x, y, BALLRADIUS*2, BALLRADIUS*2);
