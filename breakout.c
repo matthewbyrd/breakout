@@ -215,7 +215,7 @@ GOval initBall(GWindow window)
 {
 	// find centre position
 	double x = (WIDTH / 2) - BALLRADIUS;	
-	double y = (HEIGHT / 2) - BALLRADIUS;
+	double y = (HEIGHT / 1.5) - BALLRADIUS;
 
 	// set up ball
     GOval ball = newGOval(x, y, BALLRADIUS*2, BALLRADIUS*2);
