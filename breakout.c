@@ -163,7 +163,9 @@ int main(void)
 			vVelocity = -vVelocity;
 			// delete brick
 			removeGWindow(window, object); 
-			// TODO: update score
+			// update score
+			points++;
+			updateScoreboard(window, label, points);
 		}
 
         // linger before moving again
@@ -231,15 +233,15 @@ void initBricks(GWindow window)
 GOval initBall(GWindow window)
 {
 	// find centre position
-	double x = (WIDTH/2) - BALLRADIUS*2;	
-	double y = (HEIGHT/2) - BALLRADIUS*2;
+	double x = (WIDTH/2) - BALLRADIUS;	
+	double y = (HEIGHT/2) - BALLRADIUS;
 
 	// set up ball
     GOval ball = newGOval(x, y, BALLRADIUS*2, BALLRADIUS*2);
 	setColor(ball, "BLACK");
 	setFilled(ball, true);
 	add(window, ball);
-    return ball;
+	return ball;
 }
 
 /**
@@ -265,8 +267,13 @@ GRect initPaddle(GWindow window)
  */
 GLabel initScoreboard(GWindow window)
 {
-    // TODO
-    return NULL;
+    GLabel label = newGLabel("0");
+	setFont(label, "SansSerif-50");
+	setColor(label, "LIGHT_GRAY");
+	updateScoreboard(window, label, 0);  	
+    add(window, label);
+	sendToBack(label);
+	return label;
 }
 
 /**
