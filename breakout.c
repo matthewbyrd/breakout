@@ -42,6 +42,7 @@
 #define LIVES 3
 
 // prototypes
+void pauseUntilClick(void);
 void initBricks(GWindow window);
 GOval initBall(GWindow window);
 GRect initPaddle(GWindow window);
@@ -83,6 +84,9 @@ int main(void)
 	double vVelocity = 2.0;	
 	// object ball collides with
 	GObject object;
+
+	// game begins when user clicks
+	pauseUntilClick();
 
     // keep playing until game over
     while (lives && bricks)
@@ -169,6 +173,25 @@ int main(void)
     // game over
     closeGWindow(window);
     return 0;
+}
+
+/**
+ * Waits for the user to click before continuing
+ */
+void pauseUntilClick(void)
+{
+	while (true)
+	{
+		GEvent event = getNextEvent(MOUSE_EVENT);
+		if (event != NULL)
+		{
+			if (getEventType(event) == MOUSE_CLICKED)
+			{
+				return;
+			}
+		}
+		pause(20);
+	}
 }
 
 /**
