@@ -78,15 +78,18 @@ int main(void)
     // number of points initially
     int points = 0;
 
+	/** ball movement */
+	double hVelocity = drand48() + 1.0;
+	double vVelocity = 1.0;	
+
     // keep playing until game over
     while (lives && bricks)
     {
-        // paddle movement
+        /** paddle movement */
 		GEvent event = getNextEvent(MOUSE_EVENT);
-
 		if (event != NULL)
 		{
-			if (getEventType(event) == MOUSE_MOVED)
+			if (getEventType(event) == MOUSE_MOVED) 
 			{
 				double halfPadWidth = getWidth(paddle)/2;
 				double x = getX(event);	
@@ -105,7 +108,38 @@ int main(void)
 				}
 				setLocation(paddle, x, PADY); 
 			}
+		}		
+
+		// move ball
+        move(ball, hVelocity, vVelocity);
+
+        // bounce off right edge of window
+        if (getX(ball) + getWidth(ball) >= WIDTH)
+        {
+            hVelocity = -hVelocity;
+        }
+
+        // bounce off left edge of window
+        else if (getX(ball) <= 0)
+        {
+            hVelocity = -hVelocity;
+        }
+
+		// bounce off top edge of window
+		else if (getY(ball) <= 0)
+		{
+			vVelocity = -vVelocity;	
 		}
+
+		// bounce off bottom edge of window
+		else if (getY(ball) >= HEIGHT)
+		{
+			// TODO bounce for now but ultimately remove a life
+			vVelocity = -vVelocity;
+		}
+
+        // linger before moving again
+        pause(10);
     }
 
     // wait for click before exiting
