@@ -31,7 +31,7 @@
 #define BRICKHEIGHT 12
 
 // radius of ball in pixels
-#define RADIUS 10
+#define BALLRADIUS 10
 
 // size and yposition of paddle in pixels
 #define PADWIDTH 80
@@ -149,8 +149,16 @@ void initBricks(GWindow window)
  */
 GOval initBall(GWindow window)
 {
-    // TODO
-    return NULL;
+	// find centre position
+	double x = (WIDTH/2) - BALLRADIUS;	
+	double y = (HEIGHT/2) - BALLRADIUS;
+
+	// set up ball
+    GOval ball = newGOval(x, y, BALLRADIUS, BALLRADIUS);
+	setColor(ball, "BLACK");
+	setFilled(ball, true);
+	add(window, ball);
+    return ball;
 }
 
 /**
@@ -219,21 +227,21 @@ GObject detectCollision(GWindow window, GOval ball)
     }
 
     // check for collision at ball's top-right corner
-    object = getGObjectAt(window, x + 2 * RADIUS, y);
+    object = getGObjectAt(window, x + 2 * BALLRADIUS, y);
     if (object != NULL)
     {
         return object;
     }
 
     // check for collision at ball's bottom-left corner
-    object = getGObjectAt(window, x, y + 2 * RADIUS);
+    object = getGObjectAt(window, x, y + 2 * BALLRADIUS);
     if (object != NULL)
     {
         return object;
     }
 
     // check for collision at ball's bottom-right corner
-    object = getGObjectAt(window, x + 2 * RADIUS, y + 2 * RADIUS);
+    object = getGObjectAt(window, x + 2 * BALLRADIUS, y + 2 * BALLRADIUS);
     if (object != NULL)
     {
         return object;
