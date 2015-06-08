@@ -162,7 +162,8 @@ int main(void)
 		{
 			vVelocity = -vVelocity;
 			// delete brick
-			removeGWindow(window, object); 
+			removeGWindow(window, object);
+			bricks--; 
 			// update score
 			points++;
 			updateScoreboard(window, label, points);
