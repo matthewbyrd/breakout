@@ -21,16 +21,19 @@
 #define HEIGHT 550
 #define WIDTH 400
 
-// number of rows of bricks
+// number of rows and columns of bricks
 #define ROWS 5
+#define COLS 8
 
-// number of columns of bricks
-#define COLS 10
+// size of bricks in pixels
+#define BRICKGAP 5
+#define BRICKWIDTH  (WIDTH - ((COLS + 1) * BRICKGAP)) / COLS
+#define BRICKHEIGHT 12
 
 // radius of ball in pixels
 #define RADIUS 10
 
-// width and height and ypos of paddle in pixels
+// size and yposition of paddle in pixels
 #define PADWIDTH 80
 #define PADHEIGHT 10
 #define PADY HEIGHT-50
@@ -118,7 +121,27 @@ int main(void)
  */
 void initBricks(GWindow window)
 {
-    // TODO
+	// colors for the bricks
+	char *brickColors[]	= {"RED", "ORANGE", "GREEN", "BLUE", "CYAN"};	
+
+    int i, j, x, y, color;
+	x = BRICKGAP;
+	y = 10;
+	color = 0;
+	for (i = 0; i < ROWS; i++)
+	{
+		for (j = 0; j < COLS; j++)
+		{
+			GRect brick = newGRect(x, y, BRICKWIDTH, BRICKHEIGHT);
+			setColor(brick, brickColors[color]);
+			setFilled(brick, true);
+			add(window, brick);
+			x += BRICKWIDTH + BRICKGAP;
+		}
+		color++;
+		x = BRICKGAP;
+		y += BRICKHEIGHT + BRICKGAP;
+	}	
 }
 
 /**
